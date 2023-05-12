@@ -2,17 +2,21 @@
 
 require_once __DIR__.'/functions.php';
 
+session_start();
+
 $password = '';
 $password_length = $_GET['password-length'];
 
 
 //verifico se esiste il parametro 
 if (!empty($password_length)) {
-
-
     $password = generatePassword($password_length);
-}
 
+    //salvo la password in una sessione
+    $_SESSION['password'] = $password;
+    //redirect della sessione
+    header('location: ./result-password.php');
+}
 
 ?>
 
@@ -41,14 +45,6 @@ if (!empty($password_length)) {
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
-        <?php if ($password) : ?>
-            <div>
-                <h3>Your password is:</h3>
-                <p>
-                    <?php echo $password; ?>
-                </p>
-            </div>
-        <?php endif; ?>
     </div>
 </body>
 
